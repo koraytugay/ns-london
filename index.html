@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS London Grid Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="mainLayout" style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; width: 100%; max-width: 1200px;">
+            <div id="mapPanel">
+            <svg id="gridSvg" width="600" height="600"></svg>
+
+            <!-- Large Card Overlay -->
+            <div id="cardOverlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; align-items: center; justify-content: center; z-index: 1000;">
+                <div id="overlayPanel">
+                    <div id="currentCardSection">
+                        <div id="centerCardDisplay"></div>
+                    </div>
+                    <div id="historySection">
+                        <h4 class="overlay-label">History</h4>
+                        <div id="historyCardsArea"></div>
+                    </div>
+                    <div id="overlayControls">
+                        <div id="aiMessage"></div>
+                        <div id="roundCompleteMessage" style="display: none;">
+                            <h2 class="round-title">Round Complete!</h2>
+                            <p class="round-subtitle">Press ENTER to start the next line</p>
+                        </div>
+                        <p class="instruction" id="enterInstruction">Press ENTER to continue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sidePanel" style="display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; padding-top: 20px;">
+            <!-- Scoring Section -->
+            <div id="scoringSection">
+            <!-- Pink Column -->
+            <div class="score-column pink-score" id="pinkScoreColumn">
+                <div class="score-box" id="pink-box-1"></div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="pink-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="pink-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="pink-box-4"></div>
+            </div>
+
+            <!-- Sign Column between Pink and Blue -->
+            <div class="sign-column">
+                <div class="score-sign">+</div>
+            </div>
+
+            <!-- Blue Column -->
+            <div class="score-column blue-score" id="blueScoreColumn">
+                <div class="score-box" id="blue-box-1"></div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="blue-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="blue-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="blue-box-4"></div>
+            </div>
+
+            <!-- Sign Column between Blue and Purple -->
+            <div class="sign-column">
+                <div class="score-sign">+</div>
+            </div>
+
+            <!-- Purple Column -->
+            <div class="score-column purple-score" id="purpleScoreColumn">
+                <div class="score-box" id="purple-box-1"></div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="purple-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="purple-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="purple-box-4"></div>
+            </div>
+
+            <!-- Sign Column between Purple and Green -->
+            <div class="sign-column">
+                <div class="score-sign">+</div>
+            </div>
+
+            <!-- Green Column -->
+            <div class="score-column green-score" id="greenScoreColumn">
+                <div class="score-box" id="green-box-1"></div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="green-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="green-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="green-box-4"></div>
+            </div>
+
+            <!-- Sign Column between Green and Total -->
+            <div class="sign-column">
+                <div class="score-sign">=</div>
+            </div>
+
+            <!-- Total Score Column -->
+            <div class="score-column total-score" id="totalScoreColumn">
+                <div class="score-box" id="total-box-1">
+                    <div class="hub-circle">2</div>
+                </div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="total-box-2">
+                    <div class="hub-circle">5</div>
+                </div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="total-box-3">
+                    <div class="hub-circle">9</div>
+                </div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="total-box-4"></div>
+            </div>
+
+            <!-- Horizontal multiplication signs column -->
+            <div class="score-column horizontal-multipliers">
+                <div class="score-box multiplier-box">×</div>
+                <div class="score-sign" style="visibility: hidden;">+</div>
+                <div class="score-box multiplier-box">×</div>
+                <div class="score-sign" style="visibility: hidden;">+</div>
+                <div class="score-box multiplier-box">×</div>
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-box multiplier-box">+</div>
+            </div>
+
+            <!-- Sixth Score Column -->
+            <div class="score-column sixth-score" id="sixthScoreColumn">
+                <div class="score-box" id="sixth-box-1"></div>
+                <div class="score-sign">×</div>
+                <div class="score-box" id="sixth-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="sixth-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="sixth-box-4"></div>
+            </div>
+
+            <!-- Equals and Sum Column -->
+            <div class="score-column result-signs">
+                <div class="score-box multiplier-box">=</div>
+                <div class="score-sign" style="visibility: hidden;">×</div>
+                <div class="score-box multiplier-box">=</div>
+                <div class="score-sign" style="visibility: hidden;">+</div>
+                <div class="score-box multiplier-box">=</div>
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-box multiplier-box">+</div>
+            </div>
+
+            <!-- Final Result Column -->
+            <div class="score-column final-result" id="finalResultColumn">
+                <div class="score-box" id="final-box-1"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="final-box-2"></div>
+                <div class="score-sign">+</div>
+                <div class="score-box" id="final-box-3"></div>
+                <div class="score-sign">=</div>
+                <div class="score-box" id="final-box-4"></div>
+            </div>
+
+            <!-- Sign Column for Grand Total -->
+            <div class="sign-column">
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-sign">=</div>
+            </div>
+
+            <!-- Grand Score Column -->
+            <div class="score-column grand-score" id="grandScoreColumn">
+                <div class="score-box" id="grand-box-1" style="visibility: hidden;"></div>
+                <div class="score-sign" style="visibility: hidden;">+</div>
+                <div class="score-box" id="grand-box-2" style="visibility: hidden;"></div>
+                <div class="score-sign" style="visibility: hidden;">+</div>
+                <div class="score-box" id="grand-box-3" style="visibility: hidden;"></div>
+                <div class="score-sign" style="visibility: hidden;">=</div>
+                <div class="score-box" id="grand-box-4"></div>
+            </div>
+        </div>
+        
+        <div style="width: 100%; height: 2px; background: #000; margin: 15px 0; position: relative; overflow: visible;">
+            <div style="position: absolute; top: -9px; left: 50%; transform: translateX(calc(-50% + 55px)); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 9px solid #000;"></div>
+        </div>
+
+        <!-- Tourist Score Row -->
+            <div id="touristScoreRow"></div>
+        </div> <!-- End of sidePanel -->
+        </div> <!-- End of mainLayout -->
+
+        <!-- Hidden Next Color Button (still needed for logic) -->
+        <button id="nextColorBtn" style="display: none;"></button>
+    </div>
+
+    <!-- Load scripts in order -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script src="render-service.js"></script>
+    <script src="card-service.js"></script>
+    <script src="game-service.js"></script>
+    <script src="game-controller.js"></script>
+</body>
+</html>
