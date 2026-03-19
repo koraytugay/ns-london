@@ -39,67 +39,6 @@ class GameController {
         this.revealCard();
     }
 
-    // Fill dummy data for testing
-    fillDummyData() {
-        const fillBoxes = (color, prefix, values) => {
-            const lineColors = {
-                'pink': 'rgb(210, 50, 110)',
-                'blue': 'rgb(40, 150, 210)',
-                'purple': 'rgb(110, 60, 140)',
-                'green': 'rgb(70, 170, 70)'
-            };
-            const displayColor = lineColors[color] || '#000';
-            
-            for (let i = 1; i <= 4; i++) {
-                const box = document.getElementById(`${prefix}-box-${i}`);
-                if (box) {
-                    box.textContent = values[i-1] !== undefined ? values[i-1] : '0';
-                    box.style.color = displayColor;
-                }
-            }
-        };
-
-        // Fill line scores
-        fillBoxes('pink', 'pink', [5, 3, 2, 17]);
-        fillBoxes('blue', 'blue', [4, 2, 4, 12]);
-        fillBoxes('purple', 'purple', [6, 3, 0, 18]);
-        fillBoxes('green', 'green', [3, 4, 6, 18]);
-
-        // Total Score Column (Base Total)
-        const totalBox4 = document.getElementById('total-box-4');
-        if (totalBox4) totalBox4.textContent = '65';
-
-        // Sixth Score Column (Hub Counts)
-        const sixthBox1 = document.getElementById('sixth-box-1');
-        const sixthBox2 = document.getElementById('sixth-box-2');
-        const sixthBox3 = document.getElementById('sixth-box-3');
-        const sixthBox4 = document.getElementById('sixth-box-4');
-        if (sixthBox1) sixthBox1.textContent = '3'; // 2-line hubs
-        if (sixthBox2) sixthBox2.textContent = '1'; // 3-line hubs
-        if (sixthBox3) sixthBox3.textContent = '1'; // 4-line hubs
-        this.renderService.renderTouristNodeInto('sixth-box-4', '21'); // Tourist score
-
-        // Final Result Column (Hub Scores)
-        const finalBox1 = document.querySelector('#final-box-1 .hub-circle');
-        const finalBox2 = document.querySelector('#final-box-2 .hub-circle');
-        const finalBox3 = document.querySelector('#final-box-3 .hub-circle');
-        const finalBox4 = document.querySelector('#final-box-4 .hub-circle');
-        if (finalBox1) finalBox1.textContent = '6';  // 3 * 2
-        if (finalBox2) finalBox2.textContent = '5';  // 1 * 5
-        if (finalBox3) finalBox3.textContent = '9';  // 1 * 9
-        if (finalBox4) finalBox4.textContent = '20'; // Sum of bonuses
-
-        // Grand Score
-        const grandBox4 = document.getElementById('grand-box-4');
-        if (grandBox4) grandBox4.textContent = '106';
-
-        // Fill some tourist visits
-        this.renderService.fillTouristCircle(0, 'rgb(210, 50, 110)'); // Pink
-        this.renderService.fillTouristCircle(1, 'rgb(40, 150, 210)');  // Blue
-        this.renderService.fillTouristCircle(2, 'rgb(110, 60, 140)');  // Purple
-        this.renderService.fillTouristCircle(3, 'rgb(70, 170, 70)');   // Green
-    }
-
     // Setup event listeners
     setupEventListeners() {
         // Enter key handler
