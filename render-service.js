@@ -479,11 +479,13 @@ class RenderService {
         const row = document.getElementById('touristScoreRow');
         if (!row) return;
         
-        // Find the Nth circle element
-        const circles = row.querySelectorAll('.tourist-score-node circle');
-        if (circles && circles[index]) {
-            circles[index].setAttribute('fill', color);
-            // Ensure contrast by keeping text and sun rays black
+        const nodes = row.querySelectorAll('.tourist-score-node');
+        if (nodes && nodes[index]) {
+            const circle = nodes[index].querySelector('circle');
+            const text = nodes[index].querySelector('text');
+            
+            if (circle) circle.setAttribute('fill', color);
+            if (text) text.setAttribute('fill', '#fff');
         }
     }
 
