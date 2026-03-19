@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 20px;
     font-family: Arial, sans-serif;
@@ -85,7 +89,7 @@ svg {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 7.5px;
     width: 15px; /* Narrower sign columns */
 }
 
@@ -100,6 +104,15 @@ svg {
     font-size: 16px;
     font-weight: 800;
     background: #fff;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+#total-box-1, #total-box-2, #total-box-3,
+#final-box-1, #final-box-2, #final-box-3, #final-box-4,
+#sixth-box-4 {
+    border-color: transparent !important;
+    background: transparent !important;
 }
 
 .multiplier-box {
@@ -112,6 +125,10 @@ svg {
     font-size: 14px;
     font-weight: 800;
     color: #000;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pink-score { color: rgb(210, 50, 110); }
@@ -174,8 +191,8 @@ svg {
     align-items: center;
     justify-content: center;
     overflow: visible;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 
 /* MODERNIZED CARD OVERLAY */
