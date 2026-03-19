@@ -475,6 +475,45 @@ class RenderService {
         });
     }
 
+    renderTouristNodeInto(elementId, value) {
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const radius = this.SHAPE_SIZE * 1.3;
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '-25 -25 50 50');
+        svg.setAttribute('width', '40');
+        svg.setAttribute('height', '40');
+        svg.setAttribute('class', 'tourist-score-node');
+        
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        this.drawSunDecoration(group, 0, 0, radius);
+        svg.appendChild(group);
+        
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', '0');
+        circle.setAttribute('cy', '0');
+        circle.setAttribute('r', radius);
+        circle.setAttribute('fill', '#fff');
+        circle.setAttribute('stroke', '#000');
+        circle.setAttribute('stroke-width', '1.5');
+        svg.appendChild(circle);
+        
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', '0');
+        text.setAttribute('y', '0');
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'central');
+        text.setAttribute('font-size', '16');
+        text.setAttribute('font-weight', 'bold');
+        text.setAttribute('fill', '#000');
+        text.textContent = value;
+        svg.appendChild(text);
+        
+        container.appendChild(svg);
+    }
+
     fillTouristCircle(index, color) {
         const row = document.getElementById('touristScoreRow');
         if (!row) return;

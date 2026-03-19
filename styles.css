@@ -147,15 +147,15 @@ svg {
 }
 
 .hub-circle {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background-color: rgb(70, 170, 70); /* Green color */
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
 }
 
