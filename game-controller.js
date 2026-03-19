@@ -36,6 +36,7 @@ class GameController {
         this.setupEventListeners();
 
         console.log('Game initialized. Press Enter to start.');
+        this.revealCard();
     }
 
     // Setup event listeners
@@ -216,7 +217,7 @@ class GameController {
         if (!result) return;
 
         const colorName = result.name.split(' ')[0].toLowerCase();
-        
+
         const box1 = document.getElementById(`${colorName}-box-1`);
         const box2 = document.getElementById(`${colorName}-box-2`);
         const box3 = document.getElementById(`${colorName}-box-3`);
@@ -227,7 +228,7 @@ class GameController {
             box2.textContent = result.zonesVisited;
             box3.textContent = result.riverScore;
             box4.textContent = result.score;
-            
+
             [box1, box2, box3, box4].forEach(b => {
                 b.style.color = result.color;
             });
@@ -249,7 +250,7 @@ class GameController {
         this.cardService.reset();
         this.cardService.createCards();
         this.cardService.clearRevealedCards();
-        
+
         // Hide round complete stuff
         document.getElementById('cardOverlay').style.display = 'none';
         document.getElementById('roundCompleteMessage').style.display = 'none';
