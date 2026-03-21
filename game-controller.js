@@ -190,24 +190,28 @@ class GameController {
     // Handle round completion
     onRoundComplete() {
         console.log('Round complete!');
-        this.needsRoundTransition = true;
         this.isAnimating = false;
 
         // Populate the scoring boxes for the finished line
         this.renderLineScoring();
 
-        // Show round complete in overlay
-        const cardOverlay = document.getElementById('cardOverlay');
-        const roundMsg = document.getElementById('roundCompleteMessage');
-        const enterInstr = document.getElementById('enterInstruction');
-        const centerDisplay = document.getElementById('centerCardDisplay');
-        const aiMsg = document.getElementById('aiMessage');
+        // Only show round complete transition if it's not the last line
+        if (this.gameService.currentLineIndex < 3) {
+            this.needsRoundTransition = true;
 
-        centerDisplay.innerHTML = ''; // Clear cards
-        if (aiMsg) aiMsg.style.display = 'none';
-        roundMsg.style.display = 'block';
-        if (enterInstr) enterInstr.style.display = 'none';
-        cardOverlay.style.display = 'flex';
+            // Show round complete in overlay
+            const cardOverlay = document.getElementById('cardOverlay');
+            const roundMsg = document.getElementById('roundCompleteMessage');
+            const enterInstr = document.getElementById('enterInstruction');
+            const centerDisplay = document.getElementById('centerCardDisplay');
+            const aiMsg = document.getElementById('aiMessage');
+
+            centerDisplay.innerHTML = ''; // Clear cards
+            if (aiMsg) aiMsg.style.display = 'none';
+            roundMsg.style.display = 'block';
+            if (enterInstr) enterInstr.style.display = 'none';
+            cardOverlay.style.display = 'flex';
+        }
     }
 
     // Populate the scoring boxes for the finished line
@@ -254,6 +258,7 @@ class GameController {
         // Hide round complete stuff
         document.getElementById('cardOverlay').style.display = 'none';
         document.getElementById('roundCompleteMessage').style.display = 'none';
+        
         const enterInstr = document.getElementById('enterInstruction');
         if (enterInstr) enterInstr.style.display = 'block';
 
@@ -305,38 +310,7 @@ class GameController {
         const grandBox4 = document.getElementById('grand-box-4');
         if (grandBox4) grandBox4.textContent = grandTotal;
 
-        // Display final score details in the overlay
-        const revealedPanel = document.getElementById('revealedCardsPanel');        revealedPanel.innerHTML = `
-            <h2 style="margin-top: 0;">Final Score</h2>
-
-            <div style="text-align: center; padding: 20px; background: linear-gradient(145deg, #00cc00, #009900); border-radius: 10px; margin: 20px 0;">
-                <h3 style="color: white; margin: 0;">GRAND TOTAL</h3>
-                <div style="font-size: 3em; color: white; font-weight: bold; margin: 10px 0;">${grandTotal}</div>
-                <div style="color: white; font-size: 0.9em;">Base: ${baseTotal} + Bonus: ${bonus}</div>
-            </div>
-
-            <div style="font-size: 0.85em; margin-bottom: 15px;">
-                <div style="padding: 8px; background: #f9f9f9; border-radius: 5px; margin: 5px 0;">
-                    <strong>Lines:</strong> ${baseTotal} pts
-                </div>
-                <div style="padding: 8px; background: #f9f9f9; border-radius: 5px; margin: 5px 0;">
-                    <strong>2-Line Hubs:</strong> ${hubs[2]} × 2 = ${hubs[2] * 2}
-                </div>
-                <div style="padding: 8px; background: #f9f9f9; border-radius: 5px; margin: 5px 0;">
-                    <strong>3-Line Hubs:</strong> ${hubs[3]} × 5 = ${hubs[3] * 5}
-                </div>
-                <div style="padding: 8px; background: #f9f9f9; border-radius: 5px; margin: 5px 0;">
-                    <strong>4-Line Hubs:</strong> ${hubs[4]} × 9 = ${hubs[4] * 9}
-                </div>
-            </div>
-
-            <button id="newGameBtn" style="padding: 15px; font-size: 16px; background: #2196F3; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold;">New Game</button>
-        `;
-
-        // Add click handler for new game button
-        document.getElementById('newGameBtn').addEventListener('click', () => {
-            location.reload();
-        });
+        console.log("Final Scoring Complete. Grand Total:", grandTotal);
     }}
 
 // Initialize game when page loads
