@@ -35,16 +35,14 @@ class GameController {
         // Setup event listeners
         this.setupEventListeners();
 
-        console.log('Game initialized. Press Enter to start.');
+        console.log('Game initialized. Tap anywhere to start.');
         this.revealCard();
     }
 
     // Setup event listeners
     setupEventListeners() {
-        // Enter key handler
-        document.addEventListener('keydown', (event) => {
-            if (event.key !== 'Enter') return;
-
+        // Tap/click anywhere on the screen to continue
+        document.addEventListener('click', () => {
             // Block input during animation
             if (this.isAnimating) {
                 console.log('Animation in progress, please wait...');
@@ -62,7 +60,7 @@ class GameController {
         });
     }
 
-    // Handle Enter key based on current state
+    // Handle Enter key based on current state (now triggered by tap anywhere)
     handleEnterKey() {
         if (this.currentGameState === this.GameState.WAITING_FOR_CARD) {
             this.revealCard();
@@ -270,7 +268,7 @@ class GameController {
 
     // Show final scoring
     showFinalScoring() {
-        const { grandTotal, baseTotal, bonus, hubs, touristScore } = this.gameService.calculateFinalScore();
+        const { grandTotal, baseTotal, hubs, touristScore } = this.gameService.calculateFinalScore();
 
         // Populate the Total Score Column
         const totalBox4 = document.getElementById('total-box-4');
@@ -311,7 +309,8 @@ class GameController {
         if (grandBox4) grandBox4.textContent = grandTotal;
 
         console.log("Final Scoring Complete. Grand Total:", grandTotal);
-    }}
+    }
+}
 
 // Initialize game when page loads
 document.addEventListener('DOMContentLoaded', () => {

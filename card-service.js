@@ -99,7 +99,8 @@ class CardService {
     // Create a card DOM element
     createCardElement(cardData, size = 'normal') {
         const card = document.createElement('div');
-        const scale = size === 'large' ? 1.8 : 1;
+        const isMobile = window.innerWidth < 600;
+        const scale = size === 'large' ? (isMobile ? 1.1 : 1.8) : 1;
 
         let accentColor = '#333';
         if (cardData.bg === 'pink-bg') accentColor = 'rgb(210, 50, 110)';
